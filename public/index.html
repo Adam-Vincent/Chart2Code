@@ -14,19 +14,19 @@
     <link rel="manifest" href="%PUBLIC_URL%/manifest.json"/>
     <title>Chart2Code</title>
     <!-- Favicons -->
-    <link href="assets/img/favicon.png" rel="icon">
-    <link href="assets/img/apple-touch-icon.png" rel="apple-touch-icon">
+    <link href="./assets/img/favicon.png" rel="icon">
+    <link href="./assets/img/apple-touch-icon.png" rel="apple-touch-icon">
 
     <!-- Google Fonts -->
     <link href="https://fonts.googleapis.com/css?family=Open+Sans:300,300i,400,400i,600,600i,700,700i|Raleway:300,300i,400,400i,600,600i,700,700i"
           rel="stylesheet">
 
     <!-- Vendor CSS Files -->
-    <link href="assets/vendor/bootstrap/css/bootstrap.min.css" rel="stylesheet">
-    <link href="assets/vendor/bootstrap-icons/bootstrap-icons.css" rel="stylesheet">
+    <link href="./assets/vendor/bootstrap/css/bootstrap.min.css" rel="stylesheet">
+    <link href="./assets/vendor/bootstrap-icons/bootstrap-icons.css" rel="stylesheet">
 
     <!-- Template Main CSS File -->
-    <link href="assets/css/style.css" rel="stylesheet">
+    <link href="./assets/css/style.css" rel="stylesheet">
 </head>
 <body>
 <!-- ======= Header ======= -->
@@ -34,12 +34,14 @@
     <div class="container d-flex flex-column align-items-center">
 
         <h1>Chart2Code</h1>
-        <h2>Automatically convert your diagrams into code</h2>
+        <h2>Automatically convert your diagrams to code</h2>
         <div class="subscribe">
-            <h4>Subscribe now to get the latest updates!</h4>
-            <form action="forms/notify.php" method="post" role="form" class="php-email-form">
+            <form action="./forms/notify.php" method="post" role="form" class="php-email-form">
                 <div class="subscribe-form">
-                    <input type="email" name="email" required><input type="submit" value="Subscribe">
+                    <label>
+                        <input type="email" name="email" required>
+                    </label>
+                    <input type="submit" value="Upload">
                 </div>
                 <div class="mt-2">
                     <div class="loading">Loading</div>
@@ -51,53 +53,17 @@
     </div>
 </header>
 <main id="main">
-
-    <!-- ======= About Us Section ======= -->
-    <section id="about" class="about">
-        <div class="container">
-
-            <div class="section-title">
-                <h2>About Us</h2>
-                <p></p>
-            </div>
-
-
-        </div>
-    </section><!-- End About Us Section -->
-
-    <!-- ======= Contact Us Section ======= -->
-    <section id="contact" class="contact">
-        <div class="container">
-
-            <div class="section-title">
-                <h2>About Us</h2>
-                <div></div>
-                <div></div>
-                <div></div>
-
-            </div>
-
-            <div class="row">
-
-
-            </div>
-
-        </div>
-    </section><!-- End Contact Us Section -->
-
 </main>
 <noscript>You need to enable JavaScript to run this app.</noscript>
 <div id="root"></div>
-<!-- ======= Footer ======= -->
-
 
 <a href="#" class="back-to-top d-flex align-items-center justify-content-center"><i
         class="bi bi-arrow-up-short"></i></a>
 <!-- Vendor JS Files -->
-<script src="assets/vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
-<script src="assets/vendor/php-email-form/validate.js"></script>
+<script src="./assets/vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
+<script src="./assets/vendor/php-email-form/validate.js"></script>
 
 <!-- Template Main JS File -->
-<script src="assets/js/main.js"></script>
+<script src="./assets/js/main.js"></script>
 </body>
 </html>
