@@ -1,9 +1,9 @@
-import { Button } from 'antd';
 import React from 'react';
+import MainPage from "./pages/MainPage";
 
 const App: React.FC = () => (
     <div className="App">
-      <Button type="primary">Button</Button>
+        <MainPage/>
     </div>
 );
 
