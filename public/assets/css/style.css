@@ -82,6 +82,12 @@ h6 {
   font-size: 22px;
 }
 
+#header h3 {
+  color: #eee;
+  margin-bottom: 40px;
+  font-size: 22px;
+}
+
 #header .countdown {
   margin-bottom: 80px;
 }
