@@ -1,28 +1,67 @@
 import {Navbar, Nav, Container} from 'react-bootstrap';
-
+import React, {useState} from "react";
 import backgroundImage from '../Assets/img/bg.jpg';
-import React from "react";
+import { Upload, Button, Image, Form, Input, message } from 'antd';
+import { UploadFile } from 'antd/lib/upload/interface';
+import { UploadOutlined } from '@ant-design/icons';
+import vegaEmbed from 'vega-embed';
+import 'bootstrap/dist/css/bootstrap.min.css';
+import '../PageHeader/Navgation.css';
 
 function Navgation() {
-    const navigationStyle = {
-        backgroundImage: backgroundImage,
-        height: '100vh',
-        backgroundPosition: 'center',
-        backgroundRepeat: 'no-repeat',
-        backgroundSize: 'cover',
+    const [fileList, setFileList] = useState([]);
+    const [imagePreviewUrl, setImagePreviewUrl] = useState('');
+    const [jsonData, setJsonData] = useState('');
+    const [isContentVisible, setIsContentVisible] = useState(false);
+
+    const handlePreview = async (file: UploadFile) => {
+        const reader = new FileReader();
+        reader.onload = e => {
+            // @ts-ignore
+            setImagePreviewUrl(e.target.result);
+        };
+        // @ts-ignore
+        reader.readAsDataURL(file);
     };
 
-    const headerStyle = {
-        backgroundImage: backgroundImage,
-        height: '100vh',
-        backgroundPosition: 'center',
-        backgroundRepeat: 'no-repeat',
-        backgroundSize: 'cover',
+    const handleSubmit = async () => {
+        const formData = new FormData();
+        // @ts-ignore
+        formData.append('file', fileList[0].originFileObj); // Assuming fileList[0] is the file to upload
+
+        try {
+            const response = await fetch('http://127.0.0.1:5000/upload', { // Corrected URL
+                method: 'POST',
+                body: formData,
+                credentials: 'same-origin',
+            });
+
+            if (!response.ok) {
+                throw new Error('Network response was not ok');
+            }
+
+            const data = await response.json();
+            console.log("start to vegaEmbed")
+            vegaEmbed('#vis', data.json_data);
+            console.log("stop to vegaEmbed")
+            setJsonData(JSON.stringify(data.json_data, null, 2));
+            setIsContentVisible(true);
+        } catch (error) {
+            // @ts-ignore
+            message.error('Upload failed: ' + error.message);
+        }
+    };
+
+    const handleChange = ({ fileList }: any) => setFileList(fileList);
+
+    const handleSave = () => {
+        const newSpecification = JSON.parse(jsonData);
+        vegaEmbed('#vis', newSpecification);
     };
 
     return (
         <>
-            <div style={navigationStyle}>
+            <div className="header">
                 <Navbar bg="light" expand="lg">
                     <Container>
                         <Navbar.Brand href="#home">Chart2Code</Navbar.Brand>
@@ -39,18 +78,44 @@ function Navgation() {
                         </Navbar.Collapse>
                     </Container>
                 </Navbar>
-                <header id="header" style={headerStyle} className="d-flex align-items-center">
+                <header id="header">
                     <div className="container d-flex flex-column align-items-center">
                         <h1>Welcome to Chart2Code!</h1>
                         <h2>Automatically convert your diagrams to code</h2>
-                        <div style={{ position: 'relative' }}>
-                            <h3>Upload your image now!</h3>
-                            <input type="file" onChange={(e) => {
-                                const files = e.target.files;
-                                if (files != null && files.length > 0) {
-                                    console.log(files[0]);
-                                }
-                            }}/>
+                        <div>
+                            <Form onFinish={handleSubmit} style={{ display: 'flex', alignItems: 'center' }}>
+                                <Form.Item style={{ flex: 1, marginRight: 30 }}>
+                                    <Upload
+                                        beforeUpload={() => false}
+                                        fileList={fileList}
+                                        onChange={handleChange}
+                                        onPreview={handlePreview}
+                                    >
+                                        <Button icon={<UploadOutlined />}>Select File</Button>
+                                    </Upload>
+                                </Form.Item>
+                                <Form.Item>
+                                    <Button type="primary" htmlType="submit">Upload</Button>
+                                </Form.Item>
+                            </Form>
+
+                            {imagePreviewUrl && <Image src={imagePreviewUrl} alt="Uploaded image" />}
+
+                            {isContentVisible && (
+                                <div className="container">
+                                    <div id="vis"></div>
+                                    <div className="row">
+                                        <div className="col">
+                                            <Input.TextArea
+                                                rows={10}
+                                                value={jsonData}
+                                                onChange={e => setJsonData(e.target.value)}
+                                            />
+                                            <Button onClick={handleSave}>Change Figure</Button>
+                                        </div>
+                                    </div>
+                                </div>
+                            )}
                         </div>
                     </div>
                 </header>
