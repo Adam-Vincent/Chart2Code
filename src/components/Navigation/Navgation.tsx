@@ -1,16 +1,16 @@
 import {Navbar, Nav, Container} from 'react-bootstrap';
-import React, {useRef, useState} from "react";
-import { Upload, Button, Image, Form, Input, message } from 'antd';
+import React, {useState} from "react";
+import { Upload, Button, Form, Input, message } from 'antd';
 import { UploadFile } from 'antd/lib/upload/interface';
 import { UploadOutlined } from '@ant-design/icons';
 import vegaEmbed from 'vega-embed';
 import 'bootstrap/dist/css/bootstrap.min.css';
-import '../PageHeader/Navgation.css';
+import './/Navgation.css';
 import {Vega} from "react-vega";
 
 function Navgation() {
     const [fileList, setFileList] = useState([]);
-    const [imagePreviewUrl, setImagePreviewUrl] = useState('');
+    // const [imagePreviewUrl, setImagePreviewUrl] = useState('');
     const [jsonData, setJsonData] = useState('');
     const [isContentVisible, setIsContentVisible] = useState(false);
     const [spec, setSpec] = useState(null);
