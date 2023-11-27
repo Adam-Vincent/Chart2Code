@@ -5,4 +5,33 @@
     background-size: cover;
     display: flex;
     flex-direction: column;
+    overflow: hidden;
+}
+
+.vis-container {
+    flex: 0.5;
+}
+
+.chart {
+    display: flex;
+    overflow: auto;
+    max-height: calc(100vh);
+}
+
+.schema {
+    flex: 0.5;
+    overflow: auto;
+}
+
+.selectFile, .uploadButton {
+    min-width: 80px;
+}
+
+.selectFile {
+    flex: 0.5;
+    margin-right: 30px;
+}
+
+.uploadButton {
+    flex: 0.5;
 }

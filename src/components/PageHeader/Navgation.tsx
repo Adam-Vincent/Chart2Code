@@ -1,19 +1,19 @@
 import {Navbar, Nav, Container} from 'react-bootstrap';
-import React, {useState} from "react";
-import backgroundImage from '../Assets/img/bg.jpg';
+import React, {useRef, useState} from "react";
 import { Upload, Button, Image, Form, Input, message } from 'antd';
 import { UploadFile } from 'antd/lib/upload/interface';
 import { UploadOutlined } from '@ant-design/icons';
 import vegaEmbed from 'vega-embed';
 import 'bootstrap/dist/css/bootstrap.min.css';
 import '../PageHeader/Navgation.css';
+import {Vega} from "react-vega";
 
 function Navgation() {
     const [fileList, setFileList] = useState([]);
     const [imagePreviewUrl, setImagePreviewUrl] = useState('');
     const [jsonData, setJsonData] = useState('');
     const [isContentVisible, setIsContentVisible] = useState(false);
-
+    const [spec, setSpec] = useState(null);
     const handlePreview = async (file: UploadFile) => {
         const reader = new FileReader();
         reader.onload = e => {
@@ -42,7 +42,7 @@ function Navgation() {
 
             const data = await response.json();
             console.log("start to vegaEmbed")
-            vegaEmbed('#vis', data.json_data);
+            setSpec(data.json_data);
             console.log("stop to vegaEmbed")
             setJsonData(JSON.stringify(data.json_data, null, 2));
             setIsContentVisible(true);
@@ -51,7 +51,6 @@ function Navgation() {
             message.error('Upload failed: ' + error.message);
         }
     };
-
     const handleChange = ({ fileList }: any) => setFileList(fileList);
 
     const handleSave = () => {
@@ -84,7 +83,7 @@ function Navgation() {
                         <h2>Automatically convert your diagrams to code</h2>
                         <div>
                             <Form onFinish={handleSubmit} style={{ display: 'flex', alignItems: 'center' }}>
-                                <Form.Item style={{ flex: 1, marginRight: 30 }}>
+                                <Form.Item className='selectFile'>
                                     <Upload
                                         beforeUpload={() => false}
                                         fileList={fileList}
@@ -94,26 +93,32 @@ function Navgation() {
                                         <Button icon={<UploadOutlined />}>Select File</Button>
                                     </Upload>
                                 </Form.Item>
-                                <Form.Item>
+                                <Form.Item className='uploadButton'>
                                     <Button type="primary" htmlType="submit">Upload</Button>
                                 </Form.Item>
                             </Form>
-
-                            {imagePreviewUrl && <Image src={imagePreviewUrl} alt="Uploaded image" />}
-
-                            {isContentVisible && (
-                                <div className="container">
-                                    <div id="vis"></div>
-                                    <div className="row">
-                                        <div className="col">
-                                            <Input.TextArea
-                                                rows={10}
-                                                value={jsonData}
-                                                onChange={e => setJsonData(e.target.value)}
-                                            />
-                                            <Button onClick={handleSave}>Change Figure</Button>
+                            {/*{imagePreviewUrl && <Image src={imagePreviewUrl} alt="Uploaded image" />}*/}
+                        </div>
+                        <div>
+                            {spec && (
+                                <div className='chart' >
+                                    { spec && <Vega spec={spec} style={{ flex: 0.5 }} />}
+                                    {isContentVisible && (
+                                        <div className="container">
+                                            <div id="vis"></div>
+                                            <div className="row">
+                                                <div className="col">
+                                                    <Input.TextArea
+                                                        rows={10}
+                                                        value={jsonData}
+                                                        onChange={e => setJsonData(e.target.value)}
+                                                        className='schema'
+                                                    />
+                                                    <Button onClick={handleSave}>Change Figure</Button>
+                                                </div>
+                                            </div>
                                         </div>
-                                    </div>
+                                    )}
                                 </div>
                             )}
                         </div>
