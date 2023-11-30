@@ -65,16 +65,6 @@ function Navgation() {
                     <Container>
                         <Navbar.Brand href="#home">Chart2Code</Navbar.Brand>
                         <Navbar.Toggle aria-controls="basic-navbar-nav"/>
-                        <Navbar.Collapse id="basic-navbar-nav">
-                            <Nav className="me-auto">
-                                <Nav.Link href="#home">Home</Nav.Link>
-                                <Nav.Link href="#link">Link</Nav.Link>
-                            </Nav>
-                            <Nav>
-                                <Nav.Link href="#link">Sign In</Nav.Link>
-                                <Nav.Link href="#link">Sign Up</Nav.Link>
-                            </Nav>
-                        </Navbar.Collapse>
                     </Container>
                 </Navbar>
                 <header id="header">
@@ -90,11 +80,11 @@ function Navgation() {
                                         onChange={handleChange}
                                         onPreview={handlePreview}
                                     >
-                                        <Button icon={<UploadOutlined />}>Select File</Button>
+                                        <Button>Select File</Button>
                                     </Upload>
                                 </Form.Item>
                                 <Form.Item className='uploadButton'>
-                                    <Button type="primary" htmlType="submit">Upload</Button>
+                                    <Button type="primary" htmlType="submit"  icon={<UploadOutlined />} >Upload</Button>
                                 </Form.Item>
                             </Form>
                             {/*{imagePreviewUrl && <Image src={imagePreviewUrl} alt="Uploaded image" />}*/}
